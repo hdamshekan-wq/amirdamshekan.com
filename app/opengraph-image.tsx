@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
-
 export const alt = "Amir Damshekan - Civil Engineer";
+
 export const size = {
   width: 1200,
   height: 630,
@@ -24,30 +24,33 @@ export default function Image() {
           fontFamily: "Arial, sans-serif",
         }}
       >
+        {/* LEFT SIDE */}
         <div
           style={{
-            width: "62%",
+            width: "64%",
+            height: "100%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             paddingLeft: 76,
-            paddingRight: 30,
+            paddingRight: 20,
           }}
         >
           <img
             src="https://www.amirdamshekan.com/ad-logo.png"
-            width="115"
-            height="115"
+            width={115}
+            height={115}
             style={{
               objectFit: "contain",
-              marginBottom: 30,
+              marginBottom: 28,
             }}
           />
 
           <div
             style={{
-              fontSize: 22,
-              letterSpacing: 5,
+              display: "flex",
+              fontSize: 21,
+              letterSpacing: 4,
               color: "#0b716e",
               marginBottom: 18,
             }}
@@ -57,24 +60,36 @@ export default function Image() {
 
           <div
             style={{
+              display: "flex",
+              flexDirection: "column",
               fontSize: 66,
               fontWeight: 700,
               lineHeight: 1.05,
               color: "#44545b",
-              maxWidth: 670,
             }}
           >
-            Engineering from
-            <span style={{ color: "#15918b" }}> design to delivery.</span>
+            <div style={{ display: "flex" }}>
+              Engineering from
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                color: "#15918b",
+              }}
+            >
+              design to delivery.
+            </div>
           </div>
 
           <div
             style={{
-              fontSize: 25,
+              display: "flex",
+              fontSize: 24,
               lineHeight: 1.4,
               color: "#66757b",
               marginTop: 28,
-              maxWidth: 660,
+              maxWidth: 690,
             }}
           >
             Structural • Marine • Construction • Project Management • Surveying
@@ -82,6 +97,7 @@ export default function Image() {
 
           <div
             style={{
+              display: "flex",
               fontSize: 23,
               fontWeight: 600,
               color: "#32474c",
@@ -92,37 +108,37 @@ export default function Image() {
           </div>
         </div>
 
+        {/* RIGHT SIDE */}
         <div
           style={{
-            width: "38%",
+            width: "36%",
             height: "100%",
             display: "flex",
+            position: "relative",
             alignItems: "flex-end",
             justifyContent: "center",
-            position: "relative",
           }}
         >
           <div
             style={{
               position: "absolute",
+              display: "flex",
               width: 420,
               height: 420,
-              borderRadius: "50%",
+              borderRadius: 9999,
               background: "rgba(30, 151, 143, 0.14)",
-              right: 25,
+              right: 10,
               top: 105,
             }}
           />
 
           <img
             src="https://www.amirdamshekan.com/amir-engineer.png"
-            width="480"
-            height="620"
+            width={480}
+            height={620}
             style={{
               objectFit: "contain",
-              objectPosition: "bottom center",
               position: "relative",
-              zIndex: 2,
             }}
           />
         </div>
