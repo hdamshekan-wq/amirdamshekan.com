@@ -1,5 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Learn about Amir Damshekan, a civil engineer working across structural, marine, construction, project management and surveying in Vancouver, BC.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About Amir Damshekan | Civil Engineer",
+    description:
+      "Civil engineering with a practical field perspective across structural, marine and construction projects.",
+    url: "/about",
+  },
+};
 
 const expertise = [
   ["Structural Engineering", "Steel and concrete structures with an emphasis on practical design development, detailing coordination and constructability."],
