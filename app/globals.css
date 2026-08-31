@@ -1,3 +1,11 @@
+@import "tailwindcss" important;
+@source "./";
+@source "../components";
+@source "../lib";
+@import "tailwindcss" important;
+@source "./";
+@source "../components";
+@source "../lib";
 :root {
   --teal-950: #07383a;
   --teal-900: #075153;
@@ -163,7 +171,7 @@ button, input, textarea { font: inherit; }
 .service-body p { margin: 11px 0 10px; min-height: 72px; color: #62757b; font-size: 10.5px; line-height: 1.55; }
 .service-body ul { margin: 0 0 13px; padding: 0; display: grid; gap: 4px; list-style: none; }
 .service-body li { color: #536970; font-size: 9.5px; }
-.service-body li::before { content: "•"; color: var(--teal-700); margin-right: 7px; }
+.service-body li::before { content: "Ã¢â‚¬Â¢"; color: var(--teal-700); margin-right: 7px; }
 .service-body a { color: var(--teal-800); font-size: 10px; font-weight: 850; }
 .service-body a span { margin-left: 7px; }
 
@@ -522,7 +530,7 @@ button, input, textarea { font: inherit; }
   }
 }
 
-/* FINAL HERO TUNING — preserve the approved design, remove the hard split. */
+/* FINAL HERO TUNING Ã¢â‚¬â€ preserve the approved design, remove the hard split. */
 @media (min-width: 921px) {
   .hero {
     display: block;
