@@ -113,8 +113,6 @@ export async function POST(request: Request) {
     );
   }
 
-  // Verify that the configured Stripe Price agrees
-  // with the database billing mode.
   const stripePrice = await stripe().prices.retrieve(priceId);
 
   const actualMode: "subscription" | "payment" =
@@ -166,10 +164,6 @@ export async function POST(request: Request) {
         process.env.STRIPE_AUTOMATIC_TAX === "true",
     },
 
-    // Stripe-hosted Terms of Service consent is required
-    // only in Live mode.
-    // MarineStruc's internal policy acceptance remains
-    // mandatory in both Test and Live modes.
     ...(liveMode
       ? {
           consent_collection: {
@@ -238,6 +232,13 @@ export async function POST(request: Request) {
     });
 
   if (orderError) {
+    console.error("MarineStruc order insert failed:", {
+      code: orderError.code,
+      message: orderError.message,
+      details: orderError.details,
+      hint: orderError.hint,
+    });
+
     await stripe()
       .checkout.sessions.expire(checkout.id)
       .catch(() => undefined);
