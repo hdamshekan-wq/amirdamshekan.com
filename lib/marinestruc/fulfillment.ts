@@ -13,7 +13,11 @@ export async function fulfillCheckoutSession(checkoutSessionId: string) {
   });
 
   if (session.payment_status === "unpaid") return;
-  if (session.consent?.terms_of_service !== "accepted") {
+  const liveMode = process.env.STRIPE_LIVE_MODE === "true";
+  const stripeTermsAccepted =
+    session.consent?.terms_of_service === "accepted";
+
+  if (liveMode && !stripeTermsAccepted) {
     throw new Error("Stripe Terms of Service consent was not accepted.");
   }
 
@@ -81,7 +85,7 @@ export async function fulfillCheckoutSession(checkoutSessionId: string) {
       customer_name: customerName,
       customer_email: customerEmail,
       billing_address: billingAddress,
-      stripe_terms_accepted_at: new Date().toISOString(),
+      stripe_terms_accepted_at: stripeTermsAccepted ? new Date().toISOString() : null,
       paid_at: new Date().toISOString(),
     }, { onConflict: "stripe_checkout_session_id" })
     .select("*")
