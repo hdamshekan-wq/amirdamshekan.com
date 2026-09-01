@@ -48,35 +48,35 @@ const projects = [
     type: "marine",
     category: "MARINE / WATERFRONT",
     title: "Marine & Waterfront Structures",
-    text: "Selected engineering and construction work for waterfront environments, floating systems, docks and marine access structures.",
+    text: "Engineering and construction support for floating systems, docks, access structures and waterfront environments.",
   },
   {
     type: "steel",
     category: "STRUCTURAL / INDUSTRIAL",
     title: "Steel Structures",
-    text: "Structural work developed with fabrication, erection and field constructability in mind.",
+    text: "Structural work developed with fabrication, erection, connection coordination and field constructability in mind.",
   },
   {
     type: "concrete",
     category: "CONCRETE / CONSTRUCTION",
     title: "Concrete Structures",
-    text: "Concrete structural solutions coordinated from design intent through site execution and verification.",
+    text: "Concrete structural solutions coordinated from design intent through construction, verification and closeout.",
   },
 ];
 
 const academy = [
   {
-    icon: "△",
+    icon: "SD",
     title: "Structural Design",
     text: "Design concepts, practical detailing, steel and concrete topics explained with a field perspective.",
   },
   {
-    icon: "⌖",
+    icon: "CS",
     title: "Construction & Surveying",
     text: "Field methods, layout, control, constructability and lessons from real construction workflows.",
   },
   {
-    icon: "≡",
+    icon: "TA",
     title: "Technical Articles",
     text: "Engineering notes, references, checklists and practical guidance organized for quick use.",
   },
@@ -90,6 +90,7 @@ function ServiceIcon({ name }: { name: string }) {
       </svg>
     );
   }
+
   if (name === "marine") {
     return (
       <svg viewBox="0 0 48 48" aria-hidden="true">
@@ -97,6 +98,7 @@ function ServiceIcon({ name }: { name: string }) {
       </svg>
     );
   }
+
   if (name === "construction") {
     return (
       <svg viewBox="0 0 48 48" aria-hidden="true">
@@ -105,6 +107,7 @@ function ServiceIcon({ name }: { name: string }) {
       </svg>
     );
   }
+
   if (name === "management") {
     return (
       <svg viewBox="0 0 48 48" aria-hidden="true">
@@ -115,6 +118,7 @@ function ServiceIcon({ name }: { name: string }) {
       </svg>
     );
   }
+
   return (
     <svg viewBox="0 0 48 48" aria-hidden="true">
       <circle cx="24" cy="24" r="10" />
@@ -127,17 +131,19 @@ function ServiceIcon({ name }: { name: string }) {
 function Wordmark({ compact = false }: { compact?: boolean }) {
   return (
     <div className={`wordmark ${compact ? "compact" : ""}`}>
-      <Image src="/ad-logo.png" alt="Amir Damshekan" width={180} height={180} priority={!compact} />
+      <Image
+        src="/ad-logo.png"
+        alt="Amir Damshekan"
+        width={180}
+        height={180}
+        priority={!compact}
+      />
       <div>
         <strong>Amir Damshekan</strong>
         <span>CIVIL ENGINEER</span>
       </div>
     </div>
   );
-}
-
-function HelmetBadge() {
-  return null;
 }
 
 export default function Home() {
@@ -151,7 +157,7 @@ export default function Home() {
         <nav className="desktop-nav" aria-label="Primary navigation">
           <a className="active" href="#home">Home</a>
           <details>
-            <summary>Engineering <span>⌄</span></summary>
+            <summary>Engineering <span aria-hidden="true">&#8964;</span></summary>
             <div className="nav-menu">
               <a href="#structural">Structural Engineering</a>
               <a href="#marine">Marine Engineering</a>
@@ -161,7 +167,7 @@ export default function Home() {
             </div>
           </details>
           <details>
-            <summary>Projects <span>⌄</span></summary>
+            <summary>Projects <span aria-hidden="true">&#8964;</span></summary>
             <div className="nav-menu small">
               <a href="#projects">Featured Projects</a>
               <a href="#projects">Structural</a>
@@ -170,7 +176,7 @@ export default function Home() {
             </div>
           </details>
           <details>
-            <summary>Academy <span>⌄</span></summary>
+            <summary>Academy <span aria-hidden="true">&#8964;</span></summary>
             <div className="nav-menu small">
               <a href="#academy">Structural Design</a>
               <a href="#academy">Construction & Surveying</a>
@@ -178,49 +184,52 @@ export default function Home() {
             </div>
           </details>
           <details>
-            <summary>Software <span>⌄</span></summary>
+            <summary>Software <span aria-hidden="true">&#8964;</span></summary>
             <div className="nav-menu small">
               <a href="#software">MarineStruc</a>
-              <a href="#software">Documentation</a>
-              <a href="#software">Licensing & Releases</a>
+              <a href="/marinestruc/pricing">Licensing & Pricing</a>
+              <a href="/account">Customer Account</a>
             </div>
           </details>
           <a href="/about">About</a>
         </nav>
 
-        <a className="contact-pill" href="#contact">Contact <span>→</span></a>
+        <a className="contact-pill" href="#project-enquiry">Contact <span>&rarr;</span></a>
 
         <details className="mobile-menu">
-          <summary aria-label="Open navigation">☰</summary>
+          <summary aria-label="Open navigation">&#9776;</summary>
           <div className="mobile-menu-panel">
             <a href="#home">Home</a>
             <a href="#engineering">Engineering</a>
             <a href="#projects">Projects</a>
             <a href="#academy">Academy</a>
             <a href="#software">Software</a>
+            <a href="/marinestruc/pricing">MarineStruc Licensing</a>
             <a href="/about">About</a>
-            <a href="#contact">Contact</a>
+            <a href="#project-enquiry">Contact</a>
           </div>
         </details>
       </header>
 
       <section className="hero" id="home">
         <div className="hero-left">
-          <div className="hero-kicker"><span>CIVIL ENGINEER</span><i /> <span>VANCOUVER, BC</span></div>
+          <div className="hero-kicker">
+            <span>CIVIL ENGINEER</span><i /> <span>VANCOUVER, BC</span>
+          </div>
           <h1>Engineering from <em>design to delivery.</em></h1>
           <p>
-            Civil engineering across structural, marine, construction, project management and surveying — with a strong focus on practical execution.
+            Civil engineering across structural, marine and construction environments, combining design development, field coordination and surveying with a strong focus on buildability.
           </p>
           <div className="hero-actions">
-            <a href="#engineering" className="btn primary">Explore Engineering <span>→</span></a>
-            <a href="#projects" className="btn secondary">View Projects <span>→</span></a>
+            <a href="#engineering" className="btn primary">Explore Engineering <span>&rarr;</span></a>
+            <a href="#projects" className="btn secondary">View Projects <span>&rarr;</span></a>
           </div>
           <div className="hero-tags" aria-label="Core expertise">
-            <span><b>▦</b> Structural</span>
-            <span><b>≈</b> Marine</span>
-            <span><b>⌂</b> Construction</span>
-            <span><b>◫</b> Management</span>
-            <span><b>⌖</b> Surveying</span>
+            <span>Structural</span>
+            <span>Marine</span>
+            <span>Construction</span>
+            <span>Management</span>
+            <span>Surveying</span>
           </div>
         </div>
 
@@ -237,7 +246,7 @@ export default function Home() {
             />
           </div>
           <div className="hero-quote">
-            <span className="quote-mark">“</span>
+            <span className="quote-mark">&ldquo;</span>
             <div>
               <strong>Safe. Practical. Built to Last.</strong>
               <small>Engineering with a field perspective.</small>
@@ -252,8 +261,8 @@ export default function Home() {
             <span className="eyebrow">ENGINEERING SERVICES</span>
             <h2>What I Do</h2>
           </div>
-          <p>Delivering reliable engineering solutions for land and marine environments, from concept to construction.</p>
-          <a className="section-link" href="#contact">Discuss a Project <span>→</span></a>
+          <p>Engineering support that connects design intent with practical field execution across land and marine environments.</p>
+          <a className="section-link" href="#project-enquiry">Discuss a Project <span>&rarr;</span></a>
         </div>
 
         <div className="service-cards">
@@ -273,7 +282,7 @@ export default function Home() {
                 <ul>
                   {service.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
                 </ul>
-                <a href="#contact">Learn More <span>→</span></a>
+                <a href="#project-enquiry">Discuss Scope <span>&rarr;</span></a>
               </div>
             </article>
           ))}
@@ -283,11 +292,11 @@ export default function Home() {
       <section className="section projects-section" id="projects">
         <div className="section-title-row compact-row">
           <div>
-            <span className="eyebrow">RECENT WORK</span>
+            <span className="eyebrow">SELECTED WORK</span>
             <h2>Featured Projects</h2>
           </div>
-          <p>A portfolio framework for structural, marine and construction work. Individual case studies can be added as projects are selected for publication.</p>
-          <a className="section-link" href="#contact">Project Enquiries <span>→</span></a>
+          <p>Selected engineering and construction work organized by discipline. Detailed case studies are published where project permissions allow.</p>
+          <a className="section-link" href="#project-enquiry">Project Enquiries <span>&rarr;</span></a>
         </div>
 
         <div className="project-grid">
@@ -302,7 +311,7 @@ export default function Home() {
                 <small>{project.category}</small>
                 <h3>{project.title}</h3>
                 <p>{project.text}</p>
-                <a href="#contact" aria-label={`View ${project.title}`}>→</a>
+                <a href="#project-enquiry" aria-label={`Discuss ${project.title}`}>&rarr;</a>
               </div>
             </article>
           ))}
@@ -315,8 +324,8 @@ export default function Home() {
             <span className="eyebrow">DEVELOPMENT & TOOLS</span>
             <h2>Engineering Software</h2>
           </div>
-          <p>Professional tools developed around real engineering workflows, documentation and repeatable technical output.</p>
-          <a className="section-link light-link" href="#contact">Product Enquiries <span>→</span></a>
+          <p>Purpose-built tools developed around real engineering workflows, documentation and repeatable technical output.</p>
+          <a className="section-link light-link" href="/marinestruc/pricing">View Licensing <span>&rarr;</span></a>
         </div>
 
         <div className="software-feature">
@@ -330,20 +339,20 @@ export default function Home() {
             </div>
           </div>
           <div className="software-info">
-            <div className="marine-mark"><span>≈</span></div>
+            <div className="marine-mark"><span aria-hidden="true">MS</span></div>
             <div>
               <span className="product-label">FEATURED PRODUCT</span>
               <h3>MarineStruc</h3>
               <strong>Marine Engineering Design & Drafting Automation</strong>
-              <p>Specialized engineering software for marine structures, floating systems, walkways and related design workflows.</p>
+              <p>Specialized engineering software for marine structures, floating systems, walkways and related design and drafting workflows.</p>
               <div className="software-points">
                 <span>Workflow automation</span>
                 <span>Engineering drawing support</span>
                 <span>Project-focused tools</span>
               </div>
               <div className="software-actions">
-                <a className="btn primary compact" href="#contact">Learn More</a>
-                <a className="btn secondary compact" href="#contact">Licensing & Releases</a>
+                <a className="btn primary compact" href="/marinestruc/pricing">Licensing & Pricing</a>
+                <a className="btn secondary compact" href="#project-enquiry">Software Enquiry</a>
               </div>
             </div>
           </div>
@@ -357,8 +366,8 @@ export default function Home() {
             <span className="eyebrow">LEARN & SHARE</span>
             <h2>Engineering Academy</h2>
           </div>
-          <p>Practical knowledge, tutorials and technical resources organized around engineering work rather than software alone.</p>
-          <a className="section-link" href="#contact">Explore Academy <span>→</span></a>
+          <p>Practical engineering knowledge, tutorials and technical resources organized around real design and construction workflows.</p>
+          <a className="section-link" href="#project-enquiry">Academy Enquiries <span>&rarr;</span></a>
         </div>
 
         <div className="academy-grid">
@@ -368,7 +377,7 @@ export default function Home() {
               <div>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
-                <a href="#contact">Explore <span>→</span></a>
+                <a href="#project-enquiry">Learn More <span>&rarr;</span></a>
               </div>
             </article>
           ))}
@@ -382,32 +391,34 @@ export default function Home() {
         </div>
         <div className="about-copy">
           <p>
-            Civil engineering practice centered on structural, marine and construction work — connecting design intent, field conditions and practical execution.
+            Civil engineer working across structural, marine and construction environments, with experience connecting design development, technical coordination, surveying and field execution.
           </p>
           <p>
-            The objective is clear engineering, efficient coordination and solutions that can be understood, fabricated and built.
+            The focus is practical: clear engineering, coordinated documentation and solutions that can be safely fabricated, constructed and verified in the field.
           </p>
           <div className="about-tags">
             <span>Structural</span><span>Marine</span><span>Construction</span><span>Management</span><span>Surveying</span>
           </div>
-          <div className="about-actions"><a className="btn primary compact" href="/about">Read More <span>→</span></a><a className="about-enquiry-link" href="#project-enquiry">Submit an Enquiry</a></div>
+          <div className="about-actions">
+            <a className="btn primary compact" href="/about">Read More <span>&rarr;</span></a>
+            <a className="about-enquiry-link" href="#project-enquiry">Submit an Enquiry</a>
+          </div>
         </div>
         <div className="about-profile">
           <div className="about-portrait-wrap">
             <Image src="/amir-engineer.png" alt="Amir Damshekan" width={260} height={330} className="about-person" />
-            <HelmetBadge />
           </div>
           <div className="signature">Amir Damshekan</div>
           <strong>Civil Engineer</strong>
-          <span>⌖ Greater Vancouver, BC</span>
+          <span>Greater Vancouver, BC</span>
         </div>
       </section>
 
       <section className="enquiry-section" id="project-enquiry">
         <div className="enquiry-intro">
           <span className="eyebrow">PROJECT & GENERAL ENQUIRIES</span>
-          <h2>Tell me what you’re working on.</h2>
-          <p>Choose the type of enquiry and provide a few project details. This form is ready for the final mail-delivery connection when the domain mailboxes are activated.</p>
+          <h2>Tell me what you&apos;re working on.</h2>
+          <p>Choose the enquiry type and share the project context, location, scope or software support you need.</p>
           <div className="contact-channels">
             <a href="mailto:info@amirdamshekan.com"><strong>General & Projects</strong><span>info@amirdamshekan.com</span></a>
             <a href="mailto:license@amirdamshekan.com"><strong>Software Licensing</strong><span>license@amirdamshekan.com</span></a>
@@ -420,23 +431,23 @@ export default function Home() {
           <label><span>Enquiry Type</span><select name="Enquiry Type" defaultValue="Engineering Project"><option>Engineering Project</option><option>Consultation</option><option>MarineStruc & Software</option><option>Licensing</option><option>Training / Academy</option><option>Other</option></select></label>
           <label className="full"><span>Project / Request Details</span><textarea name="Details" rows={5} placeholder="Briefly describe the project, location, scope, schedule or the support you need." required /></label>
           <label className="full"><span>Preferred Contact</span><select name="Preferred Contact" defaultValue="Email"><option>Email</option><option>Phone</option><option>Video Meeting</option></select></label>
-          <button className="btn primary enquiry-submit" type="submit">Prepare Enquiry <span>→</span></button>
+          <button className="btn primary enquiry-submit" type="submit">Start Enquiry <span>&rarr;</span></button>
         </form>
       </section>
 
       <section className="contact-banner" id="contact">
-        <div className="contact-icon">◌</div>
+        <div className="contact-icon" aria-hidden="true">AD</div>
         <div>
           <h2>Have a project or engineering challenge?</h2>
-          <p>Engineering enquiries: info@amirdamshekan.com · Software licensing: license@amirdamshekan.com</p>
+          <p>Engineering enquiries: info@amirdamshekan.com &middot; Software licensing: license@amirdamshekan.com</p>
         </div>
-        <a className="btn contact-btn" href="#project-enquiry">Start an Enquiry <span>→</span></a>
+        <a className="btn contact-btn" href="#project-enquiry">Start an Enquiry <span>&rarr;</span></a>
       </section>
 
       <footer className="site-footer">
         <div className="footer-brand-col">
           <Wordmark compact />
-          <p>Civil engineering from design through field execution.</p>
+          <p>Civil engineering from design development through field execution.</p>
         </div>
         <div className="footer-links">
           <h3>Quick Links</h3>
@@ -451,17 +462,17 @@ export default function Home() {
         </div>
         <div className="footer-location">
           <h3>Location</h3>
-          <p>⌖ Greater Vancouver, BC<br />Canada</p>
+          <p>Greater Vancouver, BC<br />Canada</p>
         </div>
         <div className="footer-connect">
           <h3>Connect</h3>
           <a href="mailto:info@amirdamshekan.com">info@amirdamshekan.com</a>
-          <a href="#contact">Project Enquiry</a>
-          <a href="#software">Software</a>
+          <a href="#project-enquiry">Project Enquiry</a>
+          <a href="/marinestruc/pricing">MarineStruc Licensing</a>
         </div>
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} Amir Damshekan. All rights reserved.</span>
-          <b>ENGINEERING &nbsp; • &nbsp; INTEGRITY &nbsp; • &nbsp; RESULTS</b>
+          <span>&copy; {new Date().getFullYear()} Amir Damshekan. All rights reserved.</span>
+          <b>ENGINEERING &nbsp; &bull; &nbsp; INTEGRITY &nbsp; &bull; &nbsp; RESULTS</b>
         </div>
       </footer>
     </main>
