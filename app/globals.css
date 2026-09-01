@@ -726,3 +726,23 @@ button, input, textarea, select { font: inherit; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* About portrait background - soft faded halo */
+.about-page-photo::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  bottom: 6px;
+  background: radial-gradient(
+    circle at 50% 52%,
+    rgba(11, 147, 139, .18) 0%,
+    rgba(11, 147, 139, .14) 42%,
+    rgba(11, 147, 139, .075) 62%,
+    rgba(11, 147, 139, .025) 76%,
+    rgba(11, 147, 139, 0) 88%
+  );
+  filter: blur(7px);
+  transform: scale(1.05);
+}
