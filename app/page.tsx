@@ -1,4 +1,5 @@
 import Image from "next/image";
+import VisitorCounter from "@/components/VisitorCounter";
 
 const services = [
   {
@@ -46,21 +47,21 @@ const services = [
 const projects = [
   {
     type: "marine",
-    category: "MARINE / WATERFRONT",
-    title: "Marine & Waterfront Structures",
-    text: "Engineering and construction support for floating systems, docks, access structures and waterfront environments.",
+    category: "MARINE / REHABILITATION",
+    title: "Fender, Pile & Waterfront Access",
+    text: "Engineering, drawing and field coordination for marine rehabilitation, fender and pile work, access structures and installation support.",
   },
   {
     type: "steel",
-    category: "STRUCTURAL / INDUSTRIAL",
-    title: "Steel Structures",
-    text: "Structural work developed with fabrication, erection, connection coordination and field constructability in mind.",
+    category: "STRUCTURAL / RETROFIT",
+    title: "Steel Stairs & Access Systems",
+    text: "Shop drawing, fabrication and site coordination for structural steel stairs, landings, gates, ladders and safety access systems.",
   },
   {
-    type: "concrete",
-    category: "CONCRETE / CONSTRUCTION",
-    title: "Concrete Structures",
-    text: "Concrete structural solutions coordinated from design intent through construction, verification and closeout.",
+    type: "floating",
+    category: "MARINE / FLOATING SYSTEMS",
+    title: "Floating Walkways & Boardwalks",
+    text: "Engineering development for floating access systems, modular floats, aluminum framing, marine connections and constructability.",
   },
 ];
 
@@ -194,7 +195,10 @@ export default function Home() {
           <a href="/about">About</a>
         </nav>
 
-        <a className="contact-pill" href="#project-enquiry">Contact <span>&rarr;</span></a>
+        <div className="header-actions">
+          <a className="account-link" href="/account">My Account</a>
+          <a className="contact-pill" href="#project-enquiry">Contact <span>&rarr;</span></a>
+        </div>
 
         <details className="mobile-menu">
           <summary aria-label="Open navigation">&#9776;</summary>
@@ -205,6 +209,7 @@ export default function Home() {
             <a href="#academy">Academy</a>
             <a href="#software">Software</a>
             <a href="/marinestruc/pricing">MarineStruc Licensing</a>
+            <a href="/account">My Account</a>
             <a href="/about">About</a>
             <a href="#project-enquiry">Contact</a>
           </div>
@@ -295,7 +300,7 @@ export default function Home() {
             <span className="eyebrow">SELECTED WORK</span>
             <h2>Featured Projects</h2>
           </div>
-          <p>Selected engineering and construction work organized by discipline. Detailed case studies are published where project permissions allow.</p>
+          <p>Selected project experience across marine rehabilitation, structural steel access systems and floating infrastructure. Client-specific details are published only where appropriate.</p>
           <a className="section-link" href="#project-enquiry">Project Enquiries <span>&rarr;</span></a>
         </div>
 
@@ -329,13 +334,24 @@ export default function Home() {
         </div>
 
         <div className="software-feature">
-          <div className="software-device" aria-hidden="true">
-            <div className="device-screen">
-              <div className="device-topbar"><i /><i /><i /></div>
-              <div className="model-wireframe">
-                <span /><span /><span /><span /><span />
-              </div>
-              <b>MarineStruc</b>
+          <div className="software-gallery" aria-label="MarineStruc engineering examples">
+            <div className="software-shot software-shot-main">
+              <Image
+                src="/marinestruc-walkway.jpg"
+                alt="MarineStruc walkway and gangway engineering example"
+                width={900}
+                height={858}
+              />
+              <span>Walkway / Gangway</span>
+            </div>
+            <div className="software-shot software-shot-secondary">
+              <Image
+                src="/marinestruc-float.jpg"
+                alt="MarineStruc concrete float engineering example"
+                width={900}
+                height={858}
+              />
+              <span>Concrete Float</span>
             </div>
           </div>
           <div className="software-info">
@@ -344,7 +360,7 @@ export default function Home() {
               <span className="product-label">FEATURED PRODUCT</span>
               <h3>MarineStruc</h3>
               <strong>Marine Engineering Design & Drafting Automation</strong>
-              <p>Specialized engineering software for marine structures, floating systems, walkways and related design and drafting workflows.</p>
+              <p>Specialized engineering software for marine structures, floating systems and walkways, developed around parametric modeling, repeatable drafting workflows and project-focused technical output.</p>
               <div className="software-points">
                 <span>Workflow automation</span>
                 <span>Engineering drawing support</span>
@@ -401,6 +417,7 @@ export default function Home() {
           </div>
           <div className="about-actions">
             <a className="btn primary compact" href="/about">Read More <span>&rarr;</span></a>
+            <a className="about-enquiry-link" href="/Amir_Damshekan_Civil_Engineer_Resume.pdf" download>Download Resume</a>
             <a className="about-enquiry-link" href="#project-enquiry">Submit an Enquiry</a>
           </div>
         </div>
@@ -469,9 +486,12 @@ export default function Home() {
           <a href="mailto:info@amirdamshekan.com">info@amirdamshekan.com</a>
           <a href="#project-enquiry">Project Enquiry</a>
           <a href="/marinestruc/pricing">MarineStruc Licensing</a>
+          <a href="/account">My Account</a>
+          <a href="/Amir_Damshekan_Civil_Engineer_Resume.pdf" download>Resume</a>
         </div>
         <div className="footer-bottom">
           <span>&copy; {new Date().getFullYear()} Amir Damshekan. All rights reserved.</span>
+          <VisitorCounter />
           <b>ENGINEERING &nbsp; &bull; &nbsp; INTEGRITY &nbsp; &bull; &nbsp; RESULTS</b>
         </div>
       </footer>
