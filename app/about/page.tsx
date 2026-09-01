@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import UserSession from "@/components/UserSession";
 
 export const metadata: Metadata = {
   title: "About Amir Damshekan | Civil Engineer",
@@ -49,6 +50,7 @@ export default function AboutPage() {
 
         <div className="about-nav-actions">
           <a className="about-back" href="/">&larr; Home</a>
+          <UserSession />
           <a className="btn primary compact" href="/#project-enquiry">Project Enquiry</a>
         </div>
       </nav>

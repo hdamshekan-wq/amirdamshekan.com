@@ -939,3 +939,245 @@ button, input, textarea, select { font: inherit; }
   .about-resume-row .btn { width: 100%; }
   .footer-bottom { align-items: flex-start; }
 }
+
+/* Final website polish: readability, contact workflow, mobile refinement */
+.hero-kicker { font-size: 11px; letter-spacing: .22em; }
+.hero-tags span { font-size: 11px; }
+.hero-quote small { font-size: 11px; }
+.eyebrow { font-size: 11px; letter-spacing: .24em; }
+.section-link { font-size: 11px; }
+.service-body strong,
+.service-body a { font-size: 11px; }
+.project-content small { font-size: 11px; }
+.project-content p { font-size: 12px; line-height: 1.58; }
+.product-label { font-size: 11px; }
+.software-info strong { font-size: 11px; }
+.software-info p { font-size: 12px; }
+.software-points span,
+.software-shot span { font-size: 11px; }
+.academy-card p { font-size: 12px; line-height: 1.58; }
+.academy-card a { font-size: 11px; }
+.about-tags span { font-size: 11px; }
+.about-profile strong,
+.about-profile > span { font-size: 11px; }
+.contact-banner p { font-size: 12px; }
+.footer-brand-col > p { font-size: 11px; }
+.site-footer h3 { font-size: 12px; }
+.site-footer a,
+.site-footer p { font-size: 11px; line-height: 1.7; }
+.footer-bottom { font-size: 11px; }
+.footer-bottom b { font-size: 11px; letter-spacing: .14em; }
+.visitor-counter,
+.visitor-counter strong { font-size: 11px; }
+.about-brand span { font-size: 11px; letter-spacing: .14em; }
+.about-expertise-grid article > span { font-size: 11px; }
+.credential-label { font-size: 11px; }
+.credential-coming-soon::after { font-size: 11px; letter-spacing: .10em; }
+
+/* Slightly rebalance the hero portrait so the headline retains visual priority. */
+.portrait-wrap-simple { width: min(555px, 70%); right: 2.4%; }
+.portrait-halo-simple { width: min(590px, 72%); right: 3.2%; }
+
+/* Functional enquiry form */
+.enquiry-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.enquiry-submit:disabled {
+  opacity: .65;
+  cursor: wait;
+  transform: none;
+}
+.enquiry-privacy-note {
+  color: #6c7e84;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.enquiry-privacy-note a {
+  color: var(--teal-800);
+  font-weight: 750;
+  border-bottom: 1px solid #9bc9c6;
+}
+.enquiry-status {
+  margin: 0;
+  padding: 11px 13px;
+  border-radius: 9px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.enquiry-status.success {
+  color: #075a56;
+  background: #e7f6f3;
+  border: 1px solid #b9e1dc;
+}
+.enquiry-status.error {
+  color: #7a2f2f;
+  background: #fff1f1;
+  border: 1px solid #efcaca;
+}
+.enquiry-honeypot {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
+/* Public privacy / terms pages */
+.legal-page {
+  min-height: 100vh;
+  padding: 0 clamp(20px, 6vw, 90px) 72px;
+  background: linear-gradient(145deg, #f8fbfa, #eef5f4);
+  color: #173342;
+}
+.legal-nav {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid #dce6e4;
+}
+.legal-nav a {
+  color: var(--teal-800);
+  font-size: 12px;
+  font-weight: 800;
+}
+.legal-card {
+  width: min(100%, 880px);
+  margin: 64px auto 0;
+  padding: clamp(26px, 5vw, 58px);
+  border: 1px solid #d9e5e3;
+  border-radius: 20px;
+  background: rgba(255,255,255,.93);
+  box-shadow: var(--shadow-soft);
+}
+.legal-card h1 {
+  margin: 8px 0 10px;
+  color: #173342;
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1;
+  letter-spacing: -.045em;
+}
+.legal-card h2 {
+  margin: 32px 0 9px;
+  color: #173342;
+  font-size: 20px;
+}
+.legal-card p {
+  margin: 0 0 14px;
+  color: #5d727a;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.legal-card a {
+  color: var(--teal-800);
+  font-weight: 750;
+}
+.legal-updated { color: #819196 !important; font-size: 11px !important; }
+
+@media (max-width: 920px) {
+  .portrait-wrap-simple { width: min(535px, 76%); right: 3%; }
+  .portrait-halo-simple { width: min(555px, 78%); right: 4%; }
+  .footer-bottom b { line-height: 1.6; }
+}
+
+@media (max-width: 640px) {
+  .wordmark span { display: none; }
+  .hero-kicker { font-size: 11px; letter-spacing: .14em; gap: 8px; }
+  .hero-kicker i { width: 30px; }
+  .portrait-wrap-simple { width: 84%; right: 3%; }
+  .portrait-halo-simple { width: 82%; right: 4%; }
+  .section-link,
+  .service-body a,
+  .academy-card a,
+  .about-enquiry-link { font-size: 12px; }
+  .project-content small,
+  .product-label,
+  .software-points span,
+  .software-shot span { font-size: 11px; }
+  .contact-banner p,
+  .site-footer a,
+  .site-footer p,
+  .footer-brand-col > p { font-size: 12px; }
+  .site-footer h3 { font-size: 13px; }
+  .footer-bottom,
+  .footer-bottom b,
+  .visitor-counter,
+  .visitor-counter strong { font-size: 11px; }
+  .enquiry-form-actions { align-items: stretch; flex-direction: column; }
+  .enquiry-submit { width: 100%; }
+  .enquiry-privacy-note { font-size: 11px; }
+  .legal-card { margin-top: 36px; padding: 24px 20px; }
+  .legal-card p { font-size: 13px; }
+}
+
+@media (max-width: 520px) {
+  .academy-card { grid-template-columns: 1fr; }
+  .academy-art { min-height: 108px; }
+  .site-footer { grid-template-columns: 1fr; gap: 28px; }
+  .footer-brand-col,
+  .footer-connect { grid-column: auto; }
+  .footer-links > div { grid-template-columns: 1fr 1fr; }
+  .project-content { padding: 20px; }
+  .project-content p { max-width: 100%; }
+  .about-profile { padding-left: 145px; }
+}
+
+
+/* Shared signed-in / signed-out account status */
+.auth-session {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  line-height: 1.25;
+  color: #36505b;
+}
+.auth-session a,
+.auth-session button {
+  border: 0;
+  padding: 2px 0;
+  background: transparent;
+  color: #087d79;
+  font: inherit;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+}
+.auth-session a:hover,
+.auth-session button:hover { text-decoration: underline; }
+.auth-user-name {
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #243f4b;
+  font-size: 12px;
+  font-weight: 800;
+}
+.auth-session-divider { color: #9badaf; }
+.auth-session-loading { width: 128px; opacity: 0; }
+.mobile-auth-session {
+  justify-content: flex-start;
+  padding: 10px 0;
+  border-top: 1px solid #e3eceb;
+  border-bottom: 1px solid #e3eceb;
+}
+.legal-nav-right { display: flex; align-items: center; justify-content: flex-end; gap: 18px; flex-wrap: wrap; }
+@media (max-width: 900px) {
+  .header-actions .auth-user-name { max-width: 120px; }
+  .about-nav-actions .auth-session { width: 100%; justify-content: flex-end; }
+}
+@media (max-width: 600px) {
+  .auth-session { font-size: 11px; gap: 6px; }
+  .auth-user-name { max-width: 120px; font-size: 11px; }
+  .legal-nav-right { gap: 10px; }
+}

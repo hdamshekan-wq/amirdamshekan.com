@@ -1,5 +1,7 @@
 import Image from "next/image";
 import VisitorCounter from "@/components/VisitorCounter";
+import EnquiryForm from "@/components/EnquiryForm";
+import UserSession from "@/components/UserSession";
 
 const services = [
   {
@@ -196,7 +198,7 @@ export default function Home() {
         </nav>
 
         <div className="header-actions">
-          <a className="account-link" href="/account">My Account</a>
+          <UserSession />
           <a className="contact-pill" href="#project-enquiry">Contact <span>&rarr;</span></a>
         </div>
 
@@ -209,7 +211,7 @@ export default function Home() {
             <a href="#academy">Academy</a>
             <a href="#software">Software</a>
             <a href="/marinestruc/pricing">MarineStruc Licensing</a>
-            <a href="/account">My Account</a>
+            <UserSession className="mobile-auth-session" />
             <a href="/about">About</a>
             <a href="#project-enquiry">Contact</a>
           </div>
@@ -441,15 +443,7 @@ export default function Home() {
             <a href="mailto:license@amirdamshekan.com"><strong>Software Licensing</strong><span>license@amirdamshekan.com</span></a>
           </div>
         </div>
-        <form className="enquiry-form" action="mailto:info@amirdamshekan.com" method="post" encType="text/plain">
-          <label><span>Name</span><input name="Name" type="text" placeholder="Your name" required /></label>
-          <label><span>Email</span><input name="Email" type="email" placeholder="you@company.com" required /></label>
-          <label><span>Company / Organization</span><input name="Company" type="text" placeholder="Optional" /></label>
-          <label><span>Enquiry Type</span><select name="Enquiry Type" defaultValue="Engineering Project"><option>Engineering Project</option><option>Consultation</option><option>MarineStruc & Software</option><option>Licensing</option><option>Training / Academy</option><option>Other</option></select></label>
-          <label className="full"><span>Project / Request Details</span><textarea name="Details" rows={5} placeholder="Briefly describe the project, location, scope, schedule or the support you need." required /></label>
-          <label className="full"><span>Preferred Contact</span><select name="Preferred Contact" defaultValue="Email"><option>Email</option><option>Phone</option><option>Video Meeting</option></select></label>
-          <button className="btn primary enquiry-submit" type="submit">Start Enquiry <span>&rarr;</span></button>
-        </form>
+        <EnquiryForm />
       </section>
 
       <section className="contact-banner" id="contact">
@@ -488,6 +482,9 @@ export default function Home() {
           <a href="/marinestruc/pricing">MarineStruc Licensing</a>
           <a href="/account">My Account</a>
           <a href="/Amir_Damshekan_Civil_Engineer_Resume.pdf" download>Resume</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+          <a href="/marinestruc/policy">MarineStruc Policy</a>
         </div>
         <div className="footer-bottom">
           <span>&copy; {new Date().getFullYear()} Amir Damshekan. All rights reserved.</span>

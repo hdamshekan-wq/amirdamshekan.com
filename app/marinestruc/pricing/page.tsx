@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getAuthenticatedIdentity } from "@/lib/auth";
 import { MARINESTRUC_POLICY_SLUG, MARINESTRUC_POLICY_VERSION } from "@/lib/marinestruc/policy";
+import UserSession from "@/components/UserSession";
 
 export default async function PricingPage({ searchParams }: { searchParams: Promise<{ policy?: string; error?: string }> }) {
   const params = await searchParams;
@@ -35,6 +36,7 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-14">
+      <div className="mb-5 flex justify-end"><UserSession /></div>
       <header className="max-w-3xl">
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">MarineStruc Licensing</p>
         <h1 className="mt-2 text-4xl font-semibold text-slate-900">Choose your MarineStruc license</h1>

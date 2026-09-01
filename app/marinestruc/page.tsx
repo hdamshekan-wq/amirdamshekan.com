@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { getAuthenticatedIdentity } from "@/lib/auth";
+import UserSession from "@/components/UserSession";
 
 export default async function MarineStrucPage() {
   const identity = await getAuthenticatedIdentity();
   return (
     <main className="mx-auto max-w-6xl px-6 py-16">
+      <div className="mb-5 flex justify-end"><UserSession /></div>
       <section className="overflow-hidden rounded-3xl bg-slate-950 px-8 py-14 text-white md:px-12">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-300">Engineering Software</p>
         <h1 className="mt-3 max-w-3xl text-5xl font-semibold tracking-tight">MarineStruc</h1>
