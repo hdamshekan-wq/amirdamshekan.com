@@ -1,3 +1,8 @@
+export type MarineStrucLicenseEntitlement = {
+  productId: string;
+  maxSeats: number;
+};
+
 export type ProvisionLicenseInput = {
   orderId: string;
   stripeCheckoutSessionId: string;
@@ -11,12 +16,13 @@ export type ProvisionLicenseInput = {
   expiresAt?: string | null;
   maxDevices: number;
   updatesDays?: number | null;
+  entitlements: MarineStrucLicenseEntitlement[];
 };
 
 export type ProvisionLicenseResult = {
   licenseId: string;
   licenseKey: string;
-  status: "active" | "suspended" | "revoked";
+  status: "active" | "suspended" | "revoked" | "expired";
   startsAt: string;
   expiresAt: string | null;
   updatesExpiresAt?: string | null;
@@ -57,6 +63,7 @@ export async function provisionMarineStrucLicense(input: ProvisionLicenseInput):
         expiresAt: input.expiresAt ?? null,
         maxDevices: input.maxDevices,
         updatesDays: input.updatesDays ?? null,
+        entitlements: input.entitlements,
       },
     }),
     cache: "no-store",

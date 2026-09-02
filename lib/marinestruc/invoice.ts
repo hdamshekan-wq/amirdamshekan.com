@@ -96,7 +96,7 @@ export async function createInvoicePdf(data: InvoiceData) {
 
   page.drawText(data.productName, { x: 56, y: tableY - 28, size: 11, font: bold, color: navy });
   page.drawText(data.planName, { x: 56, y: tableY - 45, size: 9, font: regular, color: gray });
-  page.drawText(`License term: ${data.licenseTerm}  |  Devices: ${data.devices}`, { x: 56, y: tableY - 61, size: 8, font: regular, color: gray });
+  page.drawText(`License term: ${data.licenseTerm}  |  Seats: ${data.devices}`, { x: 56, y: tableY - 61, size: 8, font: regular, color: gray });
   page.drawText(money(data.subtotal, data.currency), { x: 490, y: tableY - 35, size: 10, font: regular, color: navy });
 
   page.drawLine({ start: { x: 44, y: 414 }, end: { x: 568, y: 414 }, thickness: 0.7, color: rgb(0.82, 0.84, 0.86) });
