@@ -1,3 +1,4 @@
+import BackToHome from "@/components/BackToHome";
 import Link from "next/link";
 import { getAuthenticatedIdentity } from "@/lib/auth";
 import { MARINESTRUC_POLICY_TEXT, MARINESTRUC_POLICY_VERSION } from "@/lib/marinestruc/policy";
@@ -9,6 +10,7 @@ export default async function MarineStrucPolicyPage({ searchParams }: { searchPa
   const params = await searchParams;
   return (
     <main className="mx-auto max-w-4xl px-6 py-14">
+      <BackToHome />
       <div className="mb-5 flex justify-end"><UserSession /></div>
       <div className="mb-8"><p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">MarineStruc</p><h1 className="mt-2 text-4xl font-semibold text-slate-900">License & Product Policy</h1><p className="mt-2 text-slate-600">Version {MARINESTRUC_POLICY_VERSION}</p></div>
       <article className="whitespace-pre-line rounded-2xl border border-slate-200 bg-white p-7 text-[15px] leading-7 text-slate-700 shadow-sm">{MARINESTRUC_POLICY_TEXT}</article>

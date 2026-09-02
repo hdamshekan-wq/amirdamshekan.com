@@ -1,3 +1,4 @@
+import BackToHome from "@/components/BackToHome";
 import { createClient } from "@/lib/supabase/server";
 import { getAuthenticatedIdentity } from "@/lib/auth";
 import { MARINESTRUC_POLICY_SLUG, MARINESTRUC_POLICY_VERSION } from "@/lib/marinestruc/policy";
@@ -36,6 +37,7 @@ export default async function PricingPage({
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-14">
+      <BackToHome />
       <div className="mb-5 flex justify-end"><UserSession /></div>
       <header className="max-w-4xl">
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">MarineStruc Purchase</p>
