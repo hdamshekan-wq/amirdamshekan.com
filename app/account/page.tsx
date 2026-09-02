@@ -1,3 +1,4 @@
+import BackToHome from "@/components/navigation/BackToHome";
 import Link from "next/link";
 import { requireAuthenticatedIdentity } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
@@ -72,6 +73,7 @@ export default async function AccountPage({
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-14">
+      <BackToHome />
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700">Customer Portal</p>
