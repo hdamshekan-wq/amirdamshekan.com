@@ -14,6 +14,7 @@ import {
 } from "@/lib/marinestruc/policy";
 
 const TEST_MARINESTRUC_PRODUCT_ID = "prod_VAdrXW8eiDJnvB";
+const MARINESTRUC_CHECKOUT_INTEGRATION_IDENTIFIER = "marinestruc_checkout_kxqvztmp";
 
 function errorRedirect(origin: string, message: string) {
   return NextResponse.redirect(
@@ -57,7 +58,7 @@ export async function POST(request: Request) {
   }
 
   const planRecordCode = marineStrucLegacyPlanRecordCode(quote.term);
-  const [{ data: plan }, { data: policy }] = await Promise.all([
+  const [{ data: plan }, { data: policy }, { data: profile, error: profileError }] = await Promise.all([
     supabase
       .from("license_plans")
       .select("id,code")
@@ -70,9 +71,17 @@ export async function POST(request: Request) {
       .eq("version", MARINESTRUC_POLICY_VERSION)
       .eq("active", true)
       .single(),
+    supabase
+      .from("profiles")
+      .select("stripe_customer_id")
+      .eq("id", userId)
+      .maybeSingle(),
   ]);
 
   if (!plan) return errorRedirect(url.origin, "MarineStruc billing configuration is unavailable.");
+  if (profileError || !profile) {
+    return errorRedirect(url.origin, "Unable to verify your Stripe billing account.");
+  }
   if (!policy) {
     return NextResponse.redirect(
       new URL("/marinestruc/policy?error=Current%20policy%20is%20not%20configured.", url.origin),
@@ -135,10 +144,16 @@ export async function POST(request: Request) {
   }];
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || url.origin;
+  const stripeCustomerId = typeof profile.stripe_customer_id === "string"
+    ? profile.stripe_customer_id.trim()
+    : "";
   const baseParams: Stripe.Checkout.SessionCreateParams = {
     mode: billingMode,
+    integration_identifier: MARINESTRUC_CHECKOUT_INTEGRATION_IDENTIFIER,
     line_items: lineItems,
-    customer_email: user.email,
+    ...(stripeCustomerId
+      ? { customer: stripeCustomerId }
+      : { customer_email: user.email }),
     client_reference_id: userId,
     billing_address_collection: "required",
     tax_id_collection: { enabled: true },
@@ -168,7 +183,7 @@ export async function POST(request: Request) {
     checkout = await stripe().checkout.sessions.create({
       ...baseParams,
       mode: "payment",
-      customer_creation: "always",
+      ...(stripeCustomerId ? {} : { customer_creation: "always" as const }),
       payment_intent_data: { metadata: commonMetadata },
     });
   }

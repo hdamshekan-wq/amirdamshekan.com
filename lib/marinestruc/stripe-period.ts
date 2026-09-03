@@ -58,3 +58,20 @@ export function invoiceTaxMinor(invoice: unknown): number {
   }
   return 0;
 }
+
+export function subscriptionCurrentPeriodEnd(subscription: unknown): string | null {
+  const value = subscription as {
+    current_period_end?: number;
+    items?: { data?: Array<{ current_period_end?: number }> };
+  } | null;
+  const itemPeriodEnds = (value?.items?.data || [])
+    .map((item) => item.current_period_end)
+    .filter((periodEnd): periodEnd is number => typeof periodEnd === "number");
+  const periodEnd = itemPeriodEnds.length
+    ? Math.max(...itemPeriodEnds)
+    : value?.current_period_end;
+
+  return typeof periodEnd === "number"
+    ? new Date(periodEnd * 1000).toISOString()
+    : null;
+}

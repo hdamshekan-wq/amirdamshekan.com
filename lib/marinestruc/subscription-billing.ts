@@ -4,7 +4,12 @@ import { stripe } from "@/lib/stripe";
 import { createInvoicePdf } from "@/lib/marinestruc/invoice";
 import { sendPurchaseEmail } from "@/lib/marinestruc/email";
 import { renewMarineStrucLicense, setMarineStrucLicenseStatus } from "@/lib/marinestruc/license-server";
-import { invoiceServicePeriod, invoiceSubscriptionId, invoiceTaxMinor } from "@/lib/marinestruc/stripe-period";
+import {
+  invoiceServicePeriod,
+  invoiceSubscriptionId,
+  invoiceTaxMinor,
+  subscriptionCurrentPeriodEnd,
+} from "@/lib/marinestruc/stripe-period";
 import {
   isMarineStrucPurchaseTerm,
   normalizeMarineStrucModules,
@@ -187,7 +192,20 @@ export async function syncSubscriptionStatus(subscription: Stripe.Subscription, 
   else if (subscription.status === "unpaid" || subscription.status === "paused") target = "suspended";
   else if (subscription.status === "canceled" || subscription.status === "incomplete_expired" || eventType === "customer.subscription.deleted") target = "expired";
 
-  if (!target) return { ignored: true, reason: `no_access_change_for_status:${subscription.status}` };
+  const subscriptionSnapshot = {
+    stripe_subscription_status: subscription.status,
+    stripe_cancel_at_period_end: subscription.cancel_at_period_end,
+    stripe_current_period_end: subscriptionCurrentPeriodEnd(subscription),
+  };
+
+  if (!target) {
+    const { error: snapshotError } = await admin
+      .from("licenses")
+      .update(subscriptionSnapshot)
+      .eq("id", license.id);
+    if (snapshotError) throw new Error(`Subscription snapshot save failed: ${snapshotError.message}`);
+    return { ignored: false };
+  }
 
   const synced = await setMarineStrucLicenseStatus({
     stripeEventId,
@@ -199,7 +217,10 @@ export async function syncSubscriptionStatus(subscription: Stripe.Subscription, 
   if (!synced) throw new Error("License Server status endpoint is not configured.");
 
   const dbStatus = target === "expired" ? "expired" : target;
-  const { error: updateError } = await admin.from("licenses").update({ status: dbStatus }).eq("id", license.id);
+  const { error: updateError } = await admin
+    .from("licenses")
+    .update({ status: dbStatus, ...subscriptionSnapshot })
+    .eq("id", license.id);
   if (updateError) throw new Error(`Subscription status save failed: ${updateError.message}`);
   return { ignored: false };
 }

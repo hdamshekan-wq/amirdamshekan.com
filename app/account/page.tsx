@@ -25,6 +25,22 @@ function termLabel(term?: string | null, expiresAt?: string | null) {
   return expiresAt ? "Term License" : "Legacy Perpetual";
 }
 
+function isRecurringTerm(term?: string | null) {
+  return term === "monthly" || term === "annual";
+}
+
+function subscriptionStatusLabel(stripeStatus?: string | null, licenseStatus?: string | null) {
+  if (stripeStatus === "past_due") return "Past Due";
+  if (stripeStatus === "unpaid" || stripeStatus === "paused") return "Suspended";
+  if (stripeStatus === "canceled" || stripeStatus === "incomplete_expired") return "Expired";
+  if (stripeStatus === "active" || stripeStatus === "trialing") return "Active";
+  if (stripeStatus === "incomplete") return "Payment Pending";
+  if (licenseStatus === "suspended") return "Suspended";
+  if (licenseStatus === "expired" || licenseStatus === "revoked") return "Expired";
+  if (licenseStatus === "active") return "Active";
+  return "Unknown";
+}
+
 export default async function AccountPage({
   searchParams,
 }: {
@@ -35,10 +51,14 @@ export default async function AccountPage({
   const supabase = await createClient();
 
   const [{ data: profile }, { data: licenses }, { data: orders }, { data: invoices }, { data: releases }] = await Promise.all([
-    supabase.from("profiles").select("*").eq("id", identity.userId).maybeSingle(),
+    supabase
+      .from("profiles")
+      .select("first_name,last_name,company,phone,stripe_customer_id")
+      .eq("id", identity.userId)
+      .maybeSingle(),
     supabase
       .from("licenses")
-      .select("id,license_key,status,starts_at,expires_at,updates_expires_at,max_devices,created_at,purchase_term,seat_count,module_codes,full_suite")
+      .select("id,license_key,status,starts_at,expires_at,updates_expires_at,max_devices,created_at,purchase_term,seat_count,module_codes,full_suite,stripe_subscription_status,stripe_cancel_at_period_end,stripe_current_period_end")
       .eq("user_id", identity.userId)
       .order("created_at", { ascending: false }),
     supabase
@@ -80,7 +100,16 @@ export default async function AccountPage({
           <h1 className="mt-1 text-4xl font-semibold text-slate-900">My Account</h1>
           <p className="mt-2 text-slate-600">{identity.email}</p>
         </div>
-        <UserSession showAccountLink={false} />
+        <div className="flex flex-wrap items-center gap-3">
+          {profile?.stripe_customer_id && (
+            <form method="post" action="/api/billing-portal">
+              <button className="rounded-lg bg-teal-700 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-800">
+                Manage Billing
+              </button>
+            </form>
+          )}
+          <UserSession showAccountLink={false} />
+        </div>
       </div>
 
       {params.message && <p className="mt-6 rounded-lg bg-emerald-50 p-3 text-sm text-emerald-700">{params.message}</p>}
@@ -90,22 +119,40 @@ export default async function AccountPage({
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <h2 className="text-xl font-semibold">My Licenses</h2>
           <div className="mt-4 space-y-3">
-            {(licenses || []).map((license) => (
+            {(licenses || []).map((license) => {
+              const recurring = isRecurringTerm(license.purchase_term);
+              const billingStatus = subscriptionStatusLabel(license.stripe_subscription_status, license.status);
+              const cancellationDate = license.stripe_cancel_at_period_end
+                ? license.stripe_current_period_end || license.expires_at
+                : null;
+
+              return (
               <div key={license.id} className="rounded-xl bg-slate-50 p-4 text-sm">
                 <div className="flex flex-wrap justify-between gap-3">
                   <strong className="break-all">{license.license_key}</strong>
-                  <span className="uppercase text-teal-700">{license.status}</span>
+                  <span className="uppercase text-teal-700">License {license.status}</span>
                 </div>
                 <p className="mt-2 font-medium text-slate-800">
                   {termLabel(license.purchase_term, license.expires_at)} · {license.seat_count || license.max_devices} seat{(license.seat_count || license.max_devices) === 1 ? "" : "s"}
                 </p>
                 <p className="mt-1 text-slate-600">{moduleLabel(license.module_codes, license.full_suite)}</p>
+                {recurring && (
+                  <div className="mt-3 rounded-lg border border-slate-200 bg-white px-3 py-2">
+                    <p className="font-medium text-slate-800">Subscription/Billing: {billingStatus}</p>
+                    {license.stripe_cancel_at_period_end && cancellationDate && (
+                      <p className="mt-1 text-amber-700">
+                        Cancels on {new Date(cancellationDate).toLocaleDateString("en-CA")}
+                      </p>
+                    )}
+                  </div>
+                )}
                 <p className="mt-1 text-slate-600">
                   Expires: {license.expires_at ? new Date(license.expires_at).toLocaleDateString("en-CA") : "No runtime expiry"}
                   {!license.expires_at && license.updates_expires_at ? ` · Updates through ${new Date(license.updates_expires_at).toLocaleDateString("en-CA")}` : ""}
                 </p>
               </div>
-            ))}
+              );
+            })}
             {(!licenses || licenses.length === 0) && <p className="text-sm text-slate-600">No provisioned licenses yet.</p>}
           </div>
           <Link href="/marinestruc/pricing" className="mt-5 inline-block text-sm font-semibold text-teal-700">Purchase a license →</Link>

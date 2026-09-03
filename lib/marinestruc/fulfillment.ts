@@ -4,7 +4,11 @@ import { stripe } from "@/lib/stripe";
 import { provisionMarineStrucLicense } from "@/lib/marinestruc/license-server";
 import { createInvoicePdf } from "@/lib/marinestruc/invoice";
 import { sendPurchaseEmail } from "@/lib/marinestruc/email";
-import { invoiceServicePeriod, relationId } from "@/lib/marinestruc/stripe-period";
+import {
+  invoiceServicePeriod,
+  relationId,
+  subscriptionCurrentPeriodEnd,
+} from "@/lib/marinestruc/stripe-period";
 import {
   isMarineStrucPurchaseTerm,
   marineStrucLicenseServerEntitlements,
@@ -98,7 +102,7 @@ export async function fulfillCheckoutSession(checkoutSessionId: string) {
   const stripeCustomerId = relationId(session.customer);
 
   const subscriptionObject = session.subscription && typeof session.subscription === "object"
-    ? session.subscription as unknown as { latest_invoice?: unknown }
+    ? session.subscription as Stripe.Subscription
     : null;
   const latestInvoice = subscriptionObject?.latest_invoice && typeof subscriptionObject.latest_invoice === "object"
     ? subscriptionObject.latest_invoice
@@ -194,6 +198,9 @@ export async function fulfillCheckoutSession(checkoutSessionId: string) {
           expires_at: provisioned.expiresAt,
           max_devices: provisioned.maxDevices,
           stripe_subscription_id: stripeSubscriptionId,
+          stripe_subscription_status: subscriptionObject?.status || null,
+          stripe_cancel_at_period_end: subscriptionObject?.cancel_at_period_end || false,
+          stripe_current_period_end: subscriptionCurrentPeriodEnd(subscriptionObject),
           updates_expires_at: provisioned.updatesExpiresAt ?? provisioned.expiresAt ?? null,
           purchase_term: purchaseTerm,
           seat_count: quote.seats,
