@@ -59,7 +59,7 @@ export function invoiceTaxMinor(invoice: unknown): number {
   return 0;
 }
 
-export function subscriptionCurrentPeriodEnd(subscription: unknown): string | null {
+function subscriptionCurrentPeriodEnd(subscription: unknown): string | null {
   const value = subscription as {
     current_period_end?: number;
     items?: { data?: Array<{ current_period_end?: number }> };
@@ -74,4 +74,29 @@ export function subscriptionCurrentPeriodEnd(subscription: unknown): string | nu
   return typeof periodEnd === "number"
     ? new Date(periodEnd * 1000).toISOString()
     : null;
+}
+
+export function subscriptionLifecycleSnapshot(subscription: unknown, nowUnixSeconds = Date.now() / 1000) {
+  const value = subscription as {
+    status?: string;
+    cancel_at?: number | null;
+    cancel_at_period_end?: boolean;
+  } | null;
+  const status = typeof value?.status === "string" ? value.status : null;
+  const cancelAt = typeof value?.cancel_at === "number" ? value.cancel_at : null;
+  const scheduledByCancelAt = (status === "active" || status === "trialing")
+    && cancelAt !== null
+    && cancelAt > nowUnixSeconds;
+  const scheduledCancellation = value?.cancel_at_period_end === true || scheduledByCancelAt;
+  // This is the lifecycle date rendered by My Account. A scheduled cancel_at is
+  // authoritative; otherwise retain the subscription item's current period end.
+  const periodEnd = scheduledCancellation && cancelAt !== null
+    ? new Date(cancelAt * 1000).toISOString()
+    : subscriptionCurrentPeriodEnd(subscription);
+
+  return {
+    stripe_subscription_status: status,
+    stripe_cancel_at_period_end: scheduledCancellation,
+    stripe_current_period_end: periodEnd,
+  };
 }

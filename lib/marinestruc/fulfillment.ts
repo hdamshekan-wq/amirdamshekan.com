@@ -7,7 +7,7 @@ import { sendPurchaseEmail } from "@/lib/marinestruc/email";
 import {
   invoiceServicePeriod,
   relationId,
-  subscriptionCurrentPeriodEnd,
+  subscriptionLifecycleSnapshot,
 } from "@/lib/marinestruc/stripe-period";
 import {
   isMarineStrucPurchaseTerm,
@@ -104,6 +104,7 @@ export async function fulfillCheckoutSession(checkoutSessionId: string) {
   const subscriptionObject = session.subscription && typeof session.subscription === "object"
     ? session.subscription as Stripe.Subscription
     : null;
+  const subscriptionSnapshot = subscriptionLifecycleSnapshot(subscriptionObject);
   const latestInvoice = subscriptionObject?.latest_invoice && typeof subscriptionObject.latest_invoice === "object"
     ? subscriptionObject.latest_invoice
     : null;
@@ -198,9 +199,7 @@ export async function fulfillCheckoutSession(checkoutSessionId: string) {
           expires_at: provisioned.expiresAt,
           max_devices: provisioned.maxDevices,
           stripe_subscription_id: stripeSubscriptionId,
-          stripe_subscription_status: subscriptionObject?.status || null,
-          stripe_cancel_at_period_end: subscriptionObject?.cancel_at_period_end || false,
-          stripe_current_period_end: subscriptionCurrentPeriodEnd(subscriptionObject),
+          ...subscriptionSnapshot,
           updates_expires_at: provisioned.updatesExpiresAt ?? provisioned.expiresAt ?? null,
           purchase_term: purchaseTerm,
           seat_count: quote.seats,

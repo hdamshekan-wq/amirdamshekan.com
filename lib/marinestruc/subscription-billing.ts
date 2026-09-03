@@ -8,7 +8,7 @@ import {
   invoiceServicePeriod,
   invoiceSubscriptionId,
   invoiceTaxMinor,
-  subscriptionCurrentPeriodEnd,
+  subscriptionLifecycleSnapshot,
 } from "@/lib/marinestruc/stripe-period";
 import {
   isMarineStrucPurchaseTerm,
@@ -190,13 +190,9 @@ export async function syncSubscriptionStatus(subscription: Stripe.Subscription, 
   let target: "active" | "suspended" | "expired" | null = null;
   if (subscription.status === "active" || subscription.status === "trialing") target = "active";
   else if (subscription.status === "unpaid" || subscription.status === "paused") target = "suspended";
-  else if (subscription.status === "canceled" || subscription.status === "incomplete_expired" || eventType === "customer.subscription.deleted") target = "expired";
+  else if (subscription.status === "canceled" || subscription.status === "incomplete_expired") target = "expired";
 
-  const subscriptionSnapshot = {
-    stripe_subscription_status: subscription.status,
-    stripe_cancel_at_period_end: subscription.cancel_at_period_end,
-    stripe_current_period_end: subscriptionCurrentPeriodEnd(subscription),
-  };
+  const subscriptionSnapshot = subscriptionLifecycleSnapshot(subscription);
 
   if (!target) {
     const { error: snapshotError } = await admin
