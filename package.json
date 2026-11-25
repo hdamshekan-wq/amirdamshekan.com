@@ -6,6 +6,7 @@
     "test:auth": "node --test tests/auth-security.test.mjs",
     "dev": "next dev",
     "build": "next build",
+    "build:webpack": "next build --webpack",
     "start": "next start",
     "lint": "eslint"
   },

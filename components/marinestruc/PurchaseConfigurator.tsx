@@ -22,9 +22,9 @@ export default function PurchaseConfigurator({ authenticated, policyAccepted }: 
   const [seats, setSeats] = useState(1);
   const [term, setTerm] = useState<MarineStrucPurchaseTerm>("monthly");
 
-  const selectedModules = packageMode === "full"
+  const selectedModules = useMemo(() => packageMode === "full"
     ? MARINESTRUC_MODULES.map((module) => module.code)
-    : customModules;
+    : customModules, [packageMode, customModules]);
 
   const quotes = useMemo(() => {
     const terms: MarineStrucPurchaseTerm[] = ["monthly", "annual", "four_year"];
@@ -34,7 +34,7 @@ export default function PurchaseConfigurator({ authenticated, policyAccepted }: 
         quoteMarineStrucPurchase({ moduleCodes: selectedModules, seats, term: termCode }),
       ]),
     ) as Record<MarineStrucPurchaseTerm, ReturnType<typeof quoteMarineStrucPurchase>>;
-  }, [selectedModules.join("|"), seats]);
+  }, [selectedModules, seats]);
 
   const quote = quotes[term];
 

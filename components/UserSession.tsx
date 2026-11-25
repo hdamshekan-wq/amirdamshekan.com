@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 type UserSessionProps = {
@@ -18,11 +19,13 @@ export default function UserSession({
   className = "",
   showAccountLink = true,
 }: UserSessionProps) {
-  const supabase = useMemo(() => createClient(), []);
+  const router = useRouter();
   const [user, setUser] = useState<SignedInUser | null>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    // Initialize browser auth after hydration, not during static prerendering.
+    const supabase = createClient();
     let mounted = true;
 
     async function loadUser() {
@@ -72,11 +75,14 @@ export default function UserSession({
       mounted = false;
       subscription.unsubscribe();
     };
-  }, [supabase]);
+  }, []);
 
   async function handleLogout() {
-    await supabase.auth.signOut();
-    window.location.assign("/");
+    const supabase = createClient();
+    const { error } = await supabase.auth.signOut();
+    if (error) return;
+    router.replace("/");
+    router.refresh();
   }
 
   if (!ready) {

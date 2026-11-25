@@ -16,6 +16,17 @@ calls. They do not send email or verify a live authentication session.
 
 ## Getting Started
 
+Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` for
+your development Supabase project in an untracked `.env.local` before running
+the app. Public pages can be prerendered without these values, but the request
+proxy and account services still require them at runtime. Never substitute a
+service-role key for the public key or commit environment files.
+
+Run `npm run lint` and `npm run test:auth` for checks. `npm run build:webpack`
+is the verified build alternative when the default Turbopack build encounters
+the local Windows CSS/child-process error. A successful build alone does not
+verify live login, email delivery, billing, or licensing.
+
 First, run the development server:
 
 ```bash

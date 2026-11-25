@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import Image from "next/image";
 import UserSession from "@/components/UserSession";
@@ -40,18 +41,18 @@ export default function AboutPage() {
   return (
     <main className="about-page">
       <nav className="about-page-nav" aria-label="About navigation">
-        <a href="/" className="about-brand" aria-label="Amir Damshekan home">
+        <Link href="/" className="about-brand" aria-label="Amir Damshekan home">
           <Image src="/ad-logo.png" alt="" width={46} height={46} />
           <div>
             <strong>Amir Damshekan</strong>
             <span>CIVIL ENGINEER</span>
           </div>
-        </a>
+        </Link>
 
         <div className="about-nav-actions">
-          <a className="about-back" href="/">&larr; Home</a>
+          <Link className="about-back" href="/">&larr; Home</Link>
           <UserSession />
-          <a className="btn primary compact" href="/#project-enquiry">Project Enquiry</a>
+          <Link className="btn primary compact" href="/#project-enquiry">Project Enquiry</Link>
         </div>
       </nav>
 
@@ -75,16 +76,16 @@ export default function AboutPage() {
           </div>
 
           <div className="about-hero-actions">
-            <a
+            <Link
               className="btn primary"
               href="/Amir_Damshekan_Civil_Engineer_Resume.pdf"
               download
             >
               Download Resume <span>&darr;</span>
-            </a>
-            <a className="btn secondary" href="/#project-enquiry">
+            </Link>
+            <Link className="btn secondary" href="/#project-enquiry">
               Discuss a Project <span>&rarr;</span>
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -213,13 +214,13 @@ export default function AboutPage() {
             <strong>Detailed experience, software skills and project capabilities</strong>
             <span>Available in the Civil Engineering resume.</span>
           </div>
-          <a
+          <Link
             className="btn primary"
             href="/Amir_Damshekan_Civil_Engineer_Resume.pdf"
             download
           >
             Download Resume <span>&darr;</span>
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -229,9 +230,9 @@ export default function AboutPage() {
           <h2>Have an engineering or construction challenge?</h2>
           <p>Share the project scope, location and technical support you need.</p>
         </div>
-        <a className="btn contact-btn" href="/#project-enquiry">
+        <Link className="btn contact-btn" href="/#project-enquiry">
           Start an Enquiry <span>&rarr;</span>
-        </a>
+        </Link>
       </section>
     </main>
   );

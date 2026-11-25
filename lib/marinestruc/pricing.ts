@@ -112,9 +112,9 @@ export function marineStrucLicenseServerEntitlements(moduleCodes: string[], seat
     return [{ productId: "MarineStrucFullSuite", maxSeats: seats }];
   }
   return normalized.map((code) => {
-    const module = MARINESTRUC_MODULES.find((item) => item.code === code);
-    if (!module) throw new Error(`Unknown MarineStruc module: ${code}`);
-    return { productId: module.licenseProductId, maxSeats: seats };
+    const selectedModule = MARINESTRUC_MODULES.find((item) => item.code === code);
+    if (!selectedModule) throw new Error(`Unknown MarineStruc module: ${code}`);
+    return { productId: selectedModule.licenseProductId, maxSeats: seats };
   });
 }
 

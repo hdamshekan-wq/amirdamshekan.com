@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import UserSession from "@/components/UserSession";
 
@@ -10,9 +11,9 @@ export default function PrivacyPage() {
   return (
     <main className="legal-page">
       <nav className="legal-nav">
-        <a href="/">&larr; Home</a>
+        <Link href="/">&larr; Home</Link>
         <div className="legal-nav-right">
-          <a href="/terms">Terms</a>
+          <Link href="/terms">Terms</Link>
           <UserSession />
         </div>
       </nav>

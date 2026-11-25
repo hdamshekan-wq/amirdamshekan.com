@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- ImageResponse renders raw image elements through Satori, not next/image. */
 import { ImageResponse } from "next/og";
 
 export const alt = "Amir Damshekan - Civil Engineer";
@@ -37,6 +38,7 @@ export default function Image() {
           }}
         >
           <img
+            alt="Amir Damshekan logo"
             src="https://www.amirdamshekan.com/ad-logo.png"
             width={115}
             height={115}
@@ -133,6 +135,7 @@ export default function Image() {
           />
 
           <img
+            alt="Amir Damshekan"
             src="https://www.amirdamshekan.com/amir-engineer.png"
             width={480}
             height={620}
