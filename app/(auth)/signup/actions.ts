@@ -1,6 +1,6 @@
 "use server";
 
-import { headers } from "next/headers";
+import { authSiteOrigin } from "@/lib/auth-redirect";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
@@ -11,7 +11,7 @@ export async function signup(formData: FormData) {
   const company = String(formData.get("company") || "").trim();
   const email = String(formData.get("email") || "").trim();
   const password = String(formData.get("password") || "");
-  const origin = (await headers()).get("origin") || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const origin = authSiteOrigin(process.env.NEXT_PUBLIC_SITE_URL, process.env.NODE_ENV === "production");
 
   const { error } = await supabase.auth.signUp({
     email,

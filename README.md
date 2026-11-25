@@ -1,5 +1,19 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Authentication configuration
+
+Set `NEXT_PUBLIC_SITE_URL` to the exact HTTPS origin of the environment
+(for example, `https://your-preview.example.com`). Signup and password reset
+email links use this configured origin; request Origin/Host headers are not
+trusted. Missing or invalid configuration fails closed in production. Local
+development defaults to `http://localhost:3000` and permits explicit local HTTP
+origins. Configure the corresponding `/auth/callback` URL in Supabase's redirect
+allow list. See https://supabase.com/docs/guides/auth/redirect-urls.
+
+Run `npm run test:auth` with Node 22.18+ (Node 24 recommended). These tests cover
+redirect validation and the actual auth actions/callback with mocked Supabase
+calls. They do not send email or verify a live authentication session.
+
 ## Getting Started
 
 First, run the development server:
